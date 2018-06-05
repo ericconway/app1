@@ -1,0 +1,29 @@
+{
+  "name": "app1",
+  "version": "1.0.0",
+  "description": "test app to set up express.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "hello"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ericconway/app1.git"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "webserver",
+    "webapp",
+    "sample"
+  ],
+  "author": "ericconway",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ericconway/app1/issues"
+  },
+  "homepage": "https://github.com/ericconway/app1#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
