@@ -24,34 +24,43 @@ app.get('/',
   }
 )
 
-app.post('/resume', function(req, res){
-	console.log( app );
-	console.log( req.params );
-	console.log("Work Role:  %s", req.params['Work Role'] )
-	
-	
+app.get('/resume', 
+  function (req, res) {
+    res.redirect('/addResume.html');
+  }
+)
 
+app.post('/resume', function(req, res){
+	console.log("POST /resume");
+	console.log( req.body );
+		
   // Saving the new user to DB
   db.saveResume({
-      user_name: "ERIC",
-      work_role: req.params['Work Role'],
-	  company: req.params['Company']
+	  //TODO:  add additional fields here from form
+      user_name: req.body.username,
+      work_role: req.body['Work Role'],
+	  company: req.body.Company
     },
     function(err, saved) {
       console.log("[DEBUG][/resume][saveResume] %s", saved);
       if(err) {
-        req.send('<h1>ERROR</h1> <p>There was an error creating the account. Please try again later</p>');
-        res.redirect('/resume');
+        req.write('<h1>ERROR</h1> <p>There was an error creating the account. Please try again later</p>');
+        res.write('<a href="/resume">Add Resume</a>');
+		res.end();
         return
       }
       if(saved) {
-        console.log("[DEBUG][/resume][saveResume] /chat");
-        res.redirect('/chat');
+        console.log("[DEBUG][/resume][saveResume] /");
+        res.write('<h1>SUCCESS</h1> <p>Resume Was Stored</p>');
+        res.write('<a href="/resume">Add Resume</a>');
+        res.end();
       }
       else {
-        req.flash('error', 'The account wasn\'t created');
-        res.redirect('/resume');
-        console.log("[DEBUG][/resume][saveResume] /resume");
+        console.log("[ERROR][/resume][saveResume] /");
+        res.write('<h1>ERROR</h1> <p>Resume Was NOT Stored</p>');
+        res.write();
+        res.write('<a href="/resume">Add Resume</a>');
+        res.end();
       }
       return
     }
